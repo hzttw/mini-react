@@ -4,16 +4,23 @@ import {
   updateFunctionComponent,
   updateHostComponent,
   updateHostTextComponent,
-} from "./ReactReconciler";
+} from './ReactFiberReconciler';
 import {
   ClassComponent,
   Fragment,
   FunctionComponent,
   HostComponent,
   HostText,
-} from "./ReactWorkTags";
+} from './ReactWorkTags';
 
 let wip = null; //work in progress 当前正在工作中的，当前正在执行的fiber
+let wipRoot = null;
+//初次渲染和更新
+export function schedilUpdateOnFiber(fiber) {
+  wip = fiber;
+  wipRoot = fiber;
+}
+
 function performUnitOfWork() {
   const { tag } = wip;
   //1.更新当前组件
