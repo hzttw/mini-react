@@ -51,7 +51,7 @@ function performUnitOfWork() {
   }
   let next = wip;
   while (next) {
-    if (wip.sibling) {
+    if (next.sibling) {
       wip = next.sibling;
       return;
     }
@@ -72,8 +72,6 @@ function wookLoop(IdleDeadline) {
 requestIdleCallback(wookLoop);
 //提交
 function commitRoot() {
-console.log('wipRoot',wipRoot);
-
   commitWorker(wipRoot);
   wipRoot = null;
 }
@@ -84,15 +82,24 @@ function commitWorker(wip) {
   }
   //1.提交自己
   // parentNode是父dom节点
-  const parentNode = wip.return.stateNode;
+  // const parentNode = wip.return.stateNode;
+  const parentNode = getParentNode(wip.return);
   const { flags, stateNode } = wip;
-  console.log('wip',wip);
   if (flags & Placement && stateNode) {
-    console.log(stateNode);
     parentNode.appendChild(stateNode);
   }
   //2.提交子节点
   commitWorker(wip.child);
   //3.提交兄弟
   commitWorker(wip.sibling);
+}
+
+function getParentNode(wip) {
+  let tem = wip;
+  while (tem) {
+    if (tem.stateNode) {
+      return tem.stateNode;
+    }
+    tem = tem.return;
+  }
 }
