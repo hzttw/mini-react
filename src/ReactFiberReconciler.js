@@ -28,8 +28,15 @@ export function updateClassComponent(wip) {
 }
 
 
-export function updateFragmentComponent() {}
-export function updateHostTextComponent() {}
+export function updateFragmentComponent(wip) {
+  console.log(wip);
+  reconcileChildren(wip,wip.props.children)
+}
+
+
+export function updateHostTextComponent(wip) {
+  wip.stateNode = document.createTextNode(wip.props.children)
+}
 
 //协调（核心是diff）
 function reconcileChildren(wip, children) {

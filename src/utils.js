@@ -9,29 +9,33 @@ export const Update = /*                       */ 0b0000000000000000000100; // 4
 export const Deletion = /*                     */ 0b0000000000000000001000; // 8
 
 export function isStr(s) {
-  return typeof s === "string";
+  return typeof s === 'string';
 }
 
 export function isStringOrNumber(s) {
-  return typeof s === "string" || typeof s === "number";
+  return typeof s === 'string' || typeof s === 'number';
 }
 
 export function isFn(fn) {
-  return typeof fn === "function";
+  return typeof fn === 'function';
 }
 
 export function isArray(arr) {
   return Array.isArray(arr);
 }
 
-export function updateNode(node,nextVal) {
-  Object.keys(nextVal).forEach(k=>{
+export function updateNode(node, nextVal) {
+  Object.keys(nextVal).forEach((k) => {
     if (k === 'children') {
       if (isStringOrNumber(nextVal[k])) {
-        node.textContent = nextVal[k]
+        node.textContent = nextVal[k];
       }
-    }else{
-      node[k] = nextVal[k]
+    } else {
+      node[k] = nextVal[k];
     }
-  })
+  });
+}
+
+export function isUndefined(s) {
+  return s === undefined;
 }
