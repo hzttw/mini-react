@@ -18,7 +18,7 @@ function updateWorkInProgressHook() {
 			memorizedState: null,
 			next: null
 		}
-		if (workInPorogressHook) {
+		if (workInProgressHook) {
 			workInProgressHook = workInProgressHook.next = hook
 		} else {
 			// hook0
