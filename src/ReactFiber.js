@@ -22,6 +22,10 @@ export function createFiber(vnode, returnFiber) {
     flags: Placement,
     //节点在当前层级下的位置
     index: null,
+    //old fiber 
+    alternate: null,
+    //存的是头hook hook0 针对的是函数组件
+    memorizedState: null
   };
   const { type } = vnode;
   if (isStr(type)) {
@@ -34,7 +38,7 @@ export function createFiber(vnode, returnFiber) {
   } else if (isUndefined(type)) {
     fiber.tag = HostText;
     fiber.props = { children: vnode };
-  }else{
+  } else {
     fiber.tag = Fragment
   }
 

@@ -1,11 +1,12 @@
 import { createFiber } from './ReactFiber';
+import { renderWithHooks } from './hook';
 import { isArray, isStringOrNumber, updateNode } from './utils';
 
 //处理原生标签
 export function updateHostComponent(wip) {
   if (!wip.stateNode) {
     wip.stateNode = document.createElement(wip.type);
-    updateNode(wip.stateNode,wip.props)
+    updateNode(wip.stateNode, wip.props)
   }
   reconcileChildren(wip, wip.props.children);
 }
@@ -13,24 +14,25 @@ export function updateHostComponent(wip) {
 
 
 export function updateFunctionComponent(wip) {
-  const {type ,props} = wip
+  renderWithHooks(wip)
+  const { type, props } = wip
 
   const children = type(props)
-  reconcileChildren(wip,children)
+  reconcileChildren(wip, children)
 }
 
 
 export function updateClassComponent(wip) {
-  const {type ,props} = wip
+  const { type, props } = wip
   const instance = new type(props)
   const children = instance.render()
-  reconcileChildren(wip,children)
+  reconcileChildren(wip, children)
 }
 
 
 export function updateFragmentComponent(wip) {
   console.log(wip);
-  reconcileChildren(wip,wip.props.children)
+  reconcileChildren(wip, wip.props.children)
 }
 
 
@@ -55,7 +57,7 @@ function reconcileChildren(wip, children) {
     //判断头节点，如何判断头节点
     if (perviousNewFiber === null) {
       wip.child = newFiber;
-    }else{
+    } else {
       perviousNewFiber.sibling = newFiber
     }
 
